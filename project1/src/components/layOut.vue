@@ -40,9 +40,6 @@
 	background:transparent;
 	*/
 }
-body{
-	background-color: #E3E3E3;
-}
 h1,h2,h3,h4,h5,h6,em,i {
 	font-weight:100;
 	font-style:normal;
