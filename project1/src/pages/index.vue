@@ -24,7 +24,7 @@
 			</div>
 		</div>
 		<div class="main-right fr">
-			<slider-top :sendToSon="userInfo"></slider-top>
+			<slider-top :sendToSon="userInfo" :getStopTime="slideTime" @onchange="getSlideIndex"></slider-top>
 			<div class="con-r-b">
 				<ul>
 					<li v-for="(item,index) in boardList">
@@ -49,6 +49,7 @@ export default {
   },
   data() {
     return {
+      slideTime:2000,
       userInfo: [{
 				title:"xx1",
 				src:require('./../assets/slideShow/pic1.jpg'),
@@ -166,6 +167,11 @@ export default {
         }
       }
     };
+  },
+  methods:{
+    getSlideIndex (index){
+        //console.log(index);
+    }
   }
 };
 </script>

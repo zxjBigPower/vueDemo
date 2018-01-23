@@ -5,7 +5,7 @@
 			<ul class="fr">
 				<li>注册</li>
 				<li>登录</li>
-				<li>关于</li>
+				<li @click="openAboutDia">关于</li>
 			</ul>
 		</div>
 		<div class="content">
@@ -14,14 +14,31 @@
 			</keep-alive>
 		</div>
 		<div class="footer"><p>Copyright © 2013-2018 菜鸟教程  runoob.com All Rights Reserved. 备案号：闽ICP备15012807号-1</p></div>
+		<my-dialog :diaAbout="isAboutShow" @onClose="getAboutClose">
+			<p>sdfwsf</p>
+		</my-dialog>
 	</div>
 </template>
 
 <script>
+	import Dialog from "./dialog"
 	export default {
+		components:{
+			myDialog:Dialog
+		},
 		data (){
 			return {
-				
+				isAboutShow:false,
+			}
+		},
+		methods:{
+			openAboutDia (){
+				this.isAboutShow=true;
+				//console.log(222)
+			},
+			getAboutClose(attr){
+				console.log(attr)
+				this.isAboutShow=attr
 			}
 		}
 	}
