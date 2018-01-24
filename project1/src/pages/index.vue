@@ -172,6 +172,15 @@ export default {
     getSlideIndex (index){
         //console.log(index);
     }
+  },
+  mounted(){
+    this.$http.get("/goods").then((res)=>{
+      console.log(res);
+      
+    },(error)=>{
+      console.log(error);
+      
+    })
   }
 };
 </script>
@@ -250,6 +259,9 @@ export default {
 .main-right .con-r-b ul li > div p {
   margin: 5px 0;
   font-size: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .main-right .con-r-b ul li > div a {
   float: left;

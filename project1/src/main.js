@@ -6,6 +6,7 @@ import LayOut from './components/layOut'
 //import router from './router'
 import VueRouter from "vue-router"
 import IndexPage from "./pages/index"
+import vueResource from "vue-resource"
 Vue.use(VueRouter)
 let router=new VueRouter({
 	mode:"history",
@@ -19,6 +20,7 @@ let router=new VueRouter({
 new Vue({
   el: '#layOut',
   router,
+  vueResource,
   render: h => h(LayOut)
  /* template: '<App/>',
   components: { App }*/
