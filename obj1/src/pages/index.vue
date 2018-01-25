@@ -1,5 +1,6 @@
 <template>
 	<div id="layOut" class="clearfix">
+    <!-- <input type="text" v-model="baidu" @keyup="getbaiAPI"> -->
 		<div class="main-left fl">
 			<div class="conBox">
 				<div class="conBox1">
@@ -43,33 +44,37 @@
 
 <script>
 import sliderTop from "./../components/slider";
+import logFormVue from "../components/form/logForm.vue";
 export default {
   components: {
     sliderTop
   },
   data() {
     return {
-      slideTime:2000,
-      userInfo: [{
-				title:"xx1",
-				src:require('./../assets/slideShow/pic1.jpg'),
-				href:"detail/count"
-			},
-			{
-				title:"xx2",
-				src:require('./../assets/slideShow/pic2.jpg'),
-				href:"detail/borderList"
-			},
-			{
-				title:"xx3",
-				src:require('./../assets/slideShow/pic3.jpg'),
-				href:"detail/showInfo"
-			},
-			{
-				title:"xx4",
-				src:require('./../assets/slideShow/pic4.jpg'),
-				href:"detail/num"
-			}],
+      baidu: "",
+      slideTime: 2000,
+      userInfo: [
+        {
+          title: "xx1",
+          src: require("./../assets/slideShow/pic1.jpg"),
+          href: "detail/count"
+        },
+        {
+          title: "xx2",
+          src: require("./../assets/slideShow/pic2.jpg"),
+          href: "detail/borderList"
+        },
+        {
+          title: "xx3",
+          src: require("./../assets/slideShow/pic3.jpg"),
+          href: "detail/showInfo"
+        },
+        {
+          title: "xx4",
+          src: require("./../assets/slideShow/pic4.jpg"),
+          href: "detail/num"
+        }
+      ],
       boardList: [
         {
           title: "开放产品",
@@ -168,19 +173,31 @@ export default {
       }
     };
   },
-  methods:{
-    getSlideIndex (index){
-        //console.log(index);
+  methods: {
+    getSlideIndex(index) {
+      //console.log(index);
+    },
+    getbaiAPI() {
+      console.log(2222);
+      // this.$http.jsonp("https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+this.baidu).then(
+      //   res => {
+      //     console.log(res.body);
+      //   },
+      //   error => {
+      //     console.log(error);
+      //   }
+      // );
     }
-  },
-  mounted(){
-    this.$http.get("/goods").then((res)=>{
-      console.log(res);
-      
-    },(error)=>{
-      console.log(error);
-      
-    })
+  }, //https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=
+  mounted() {
+    this.$http.get("http://localhost:3000/getNewsList").then(
+      res => {
+        console.log(res.body);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 };
 </script>

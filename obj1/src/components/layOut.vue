@@ -3,8 +3,10 @@
 		<div class="header">
 			<img src="./../assets/logo.png" >
 			<ul class="fr">
-				<li @click="openDia('isLogShow')">注册</li>
-				<li @click="openDia('isRegShow')">登录</li>
+				<li v-if="userName">{{userName}}</li>
+				<li v-if="userName">退出</li>
+				<li v-if="!userName" @click="openDia('isLogShow')">注册</li>
+				<li v-if="!userName" @click="openDia('isRegShow')">登录</li>
 				<li @click="openDia('isAboutShow')">关于</li>
 			</ul>
 		</div>
@@ -18,10 +20,10 @@
 			<p>本报告在调研数据的基础上，采用定性与定量相结合的方式深入分析了专车市场发展的驱动因素与阻碍因素、专车市场背后的产业格局、专车企业的竞争格局、用户对专车市场的依赖程度、专车对其他交通工具运力的补充效应等，通过这五个章节的研究反映专车市场的发展态势和面临的问题。报告力求客观、深入、准确地反映中国专车市场发展情况，为政府、企事业单位和社会各界提供决策依据。 </p>
 		</my-dialog>
 		<my-dialog :isShow="isLogShow" @onClose="getClose('isLogShow')">
-			<log-form></log-form>
+			<log-form  @getloginUserName="getSuccessLog" @closeLogin="getCloseLogin"></log-form>
 		</my-dialog>
-		<my-dialog :isShow="isRegShow" @onClose="getClose('isRegShow')">
-			<reg-form></reg-form>
+		<my-dialog :isShow="isRegShow" @onClose="getClose('isRegShow')" >
+			<reg-form @closeRegin="getCloseRegin"></reg-form>
 		</my-dialog>
 	</div>
 </template>
@@ -30,12 +32,14 @@
 	import Dialog from "./dialog"
 	import LogForm from "./form/logForm"
 	import RegForm from "./form/regForm"
+	import logFormVue from './form/logForm.vue';
 	export default {
 		components:{
 			myDialog:Dialog,LogForm,RegForm
 		},
 		data (){
 			return {
+				userName:"",
 				isAboutShow:false,
 				isLogShow:false,
 				isRegShow:false
@@ -49,6 +53,17 @@
 			getClose(attr){
 				//console.log(attr)
 				this[attr]=false;
+			},
+			getSuccessLog(attr){
+				//console.log(attr)
+				this.userName=attr.username;
+				this.getClose('isLogShow')
+			},
+			getCloseLogin (){
+				this.getClose('isLogShow')
+			},
+			getCloseRegin (){
+				this.getClose('isRegShow')
 			}
 		},
 		

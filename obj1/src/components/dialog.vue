@@ -1,15 +1,16 @@
 <template>
   <div>
-      <div class="dialog-cover" v-if="isShow">
+      <transition name="drap">
+        <div class="dialog-cover" v-if="isShow">
           <div class="dialog-bg" @click="closeDia"></div>
           <div class="dialog-con">
               <div class="dialog-close" @click="closeDia">×</div>
               <div class="dialog-con-box">
                   <slot ></slot>
               </div>
-              
           </div>
-      </div>
+        </div>
+      </transition>
   </div>
 </template>
 
@@ -34,6 +35,15 @@ export default {
 </script>
 
 <style>
+.drap-enter{
+  transform: translateY(-500px)
+}
+.drap-leave-to{
+  transform: translateY(-500px)
+}
+.drap-enter-active,.drap-leave-active {
+  transition: all .5s
+}
 .dialog-cover {
   position: fixed;
   top: 0;

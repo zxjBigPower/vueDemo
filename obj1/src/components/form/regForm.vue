@@ -9,7 +9,7 @@
               <span>密码：</span> <input id="reg-psw" type="password" placeholder="请输入密码"> <i id="showPsw" @click="changeType">显示</i>
           </p>
           <div class="reg-botton">
-             <span class="bg">登录</span>
+             <span @click="cancelRegin">取消</span> <span class="bg">登录</span>
           </div>
       </form>
   </div>
@@ -30,6 +30,9 @@ export default {
         document.getElementById("reg-psw").type = "password";
         document.getElementById("showPsw").innerHTML == "显示";
       }
+    },
+    cancelRegin (){
+      this.$emit("closeRegin")
     }
   }
 };
@@ -48,7 +51,7 @@ p span {
   text-align: right;
 }
 p i {
-    cursor: pointer;
+  cursor: pointer;
 }
 .reg-botton {
   margin: 10px;

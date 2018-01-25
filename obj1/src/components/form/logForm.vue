@@ -7,7 +7,7 @@
           <p><span>请确认密码：</span><input type="password"></p>
           <p><span>上传头像：</span><input type="file" name="" id=""></p>
           <div class="reg-botton">
-              <span class="bg" @click="login">登录</span>
+              <span @click="cancelLogin">取消</span> <span class="bg" @click="login">登录</span>
           </div>
           <p>{{errorText}}</p>
       </form>
@@ -71,9 +71,11 @@ export default {
       if (this.userNameError.status && this.userPswError.status) {
         console.log("login");
         this.errorText = "";
-        this.$http.get("./../static/login").then(
+        this.$http.get("http://localhost:3000/login").then(
           (res) => {
-            console.log(res);
+            console.log(res.body);
+            this.$emit("getloginUserName",res.body)
+
           },
           (error) => {
             console.log(error);
@@ -82,6 +84,9 @@ export default {
       } else {
         this.errorText = "部分信息未填写";
       }
+    },
+    cancelLogin(){
+      this.$emit("closeLogin")
     }
   }
 };
