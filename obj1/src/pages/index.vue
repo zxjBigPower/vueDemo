@@ -105,25 +105,7 @@ export default {
           saleout: false
         }
       ],
-      newsList: [
-        {
-          title: "数据统计",
-          url: "http://starcraft.com"
-        },
-        {
-          title: "数据预测",
-          url: "http://warcraft.com"
-        },
-        {
-          title: "流量分析",
-          url: "http://overwatch.com",
-          hot: true
-        },
-        {
-          title: "广告发布",
-          url: "http://hearstone.com"
-        }
-      ],
+      newsList: "",
       productList: {
         pc: {
           title: "PC产品",
@@ -179,14 +161,7 @@ export default {
     },
     getbaiAPI() {
       console.log(2222);
-      // this.$http.jsonp("https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+this.baidu).then(
-      //   res => {
-      //     console.log(res.body);
-      //   },
-      //   error => {
-      //     console.log(error);
-      //   }
-      // );
+      
     }
   }, //https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=
   mounted() {
@@ -197,7 +172,23 @@ export default {
       error => {
         console.log(error);
       }
-    );
+    )
+    this.$http.get("http://localhost:3000/db").then((res)=>{
+      console.log(res.body)
+       this.newsList=res.body.getNewsList
+    },(err)=>{
+     
+    })
+    this.$http.jsonp("https://sug.so.360.cn/suggest",{  
+                                params:{  
+                                    word:'a'  
+                                }  
+                            }).then((res)=>{
+      console.log(res.body)
+       //this.newsList=res.body.getNewsList
+    },(err)=>{
+     
+    })
   }
 };
 </script>
@@ -233,6 +224,9 @@ export default {
 }
 .main-left .conBox ul li {
   position: relative;
+   white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .main-left .conBox ul li span {
   position: absolute;
@@ -289,6 +283,9 @@ export default {
   background-color: #46b8da;
   color: white;
   border-radius: 2px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .main-right .con-r-b ul li > div .img {
   width: 125px;

@@ -1,7 +1,7 @@
 <template>
-	<div>
+	<div id="App">
 		<div class="header">
-			<img src="./../assets/logo.png" >
+			<img src="./assets/logo.png" >
 			<ul class="fr">
 				<li v-if="userName">{{userName}}</li>
 				<li v-if="userName">退出</li>
@@ -9,6 +9,7 @@
 				<li v-if="!userName" @click="openDia('isRegShow')">登录</li>
 				<li @click="openDia('isAboutShow')">关于</li>
 			</ul>
+			<router-link to="/index">to foo</router-link>
 		</div>
 		<div class="content">
 			<keep-alive>
@@ -29,10 +30,10 @@
 </template>
 
 <script>
-	import Dialog from "./dialog"
-	import LogForm from "./form/logForm"
-	import RegForm from "./form/regForm"
-	import logFormVue from './form/logForm.vue';
+	import Dialog from "./components/dialog"
+	import LogForm from "./components/form/logForm"
+	import RegForm from "./components/form/regForm"
+	import logFormVue from './components/form/logForm';
 	export default {
 		components:{
 			myDialog:Dialog,LogForm,RegForm
