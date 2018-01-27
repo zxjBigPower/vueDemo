@@ -4,7 +4,7 @@
         <div class="details-left fl">
         <img src="../assets/images/1.png" alt="">
         <ul>
-          <li v-for="item in products"><a :href="'/details/'+item.path">{{item.name}}</a></li>
+          <li v-for="item in products"><a :href="'#/detail/'+item.path">{{item.name}}</a></li>
         </ul>
       </div>
       <div class="details-right fr">
@@ -17,7 +17,9 @@
           <li><span>有效时间：</span></li>
           <li><span>总价：</span></li>
         </ul></div>
-        <div class="details-r-b"></div>
+        <div class="details-r-b">
+          <router-view></router-view>
+        </div>
       </div>
       </div>
   </div>

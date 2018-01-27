@@ -33,7 +33,7 @@
 							<div class="img fl" :class="['con-r-b-img-'+(index+1)]"></div>
 							<h4>{{item.title}}</h4>
 							<p>{{item.description}}</p>
-							<a href="">立即购买</a>
+							<a :href="'#/detail/'+item.toKey">立即购买</a>
 						</div>
 					</li>
 				</ul>

@@ -9,7 +9,7 @@
 				<li v-if="!userName" @click="openDia('isRegShow')">登录</li>
 				<li @click="openDia('isAboutShow')">关于</li>
 			</ul>
-			<router-link to="/index">to foo</router-link>
+			<router-link to="/detail">to foo</router-link>
 		</div>
 		<div class="content">
 			<keep-alive>
