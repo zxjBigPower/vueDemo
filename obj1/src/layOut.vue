@@ -1,7 +1,9 @@
 <template>
 	<div id="App">
 		<div class="header">
-			<img src="./assets/logo.png" >
+			<router-link to="/">
+				<img src="./assets/logo.png" >
+			</router-link>
 			<ul class="fr">
 				<li v-if="userName">{{userName}}</li>
 				<li v-if="userName">退出</li>
@@ -9,7 +11,6 @@
 				<li v-if="!userName" @click="openDia('isRegShow')">登录</li>
 				<li @click="openDia('isAboutShow')">关于</li>
 			</ul>
-			<router-link to="/detail">to foo</router-link>
 		</div>
 		<div class="content">
 			<keep-alive>

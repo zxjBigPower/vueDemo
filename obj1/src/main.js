@@ -28,6 +28,7 @@ var router=new VueRouter({
   {
     path:'/detail',
     component:PageDetails,
+    redirect:"/detail/count",
     children:[
       {path:"count",component:detailCount},
       {path:"analysis",component:detailAnalysis},

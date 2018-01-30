@@ -9,7 +9,7 @@
 						<h6>{{product.title}}</h6>
 						<ul v-for="item in product.list">
 							<li>
-								<a :href="item.url">{{item.name}}</a> 
+								<a :href="'/#'+item.url">{{item.name}}</a> 
 								<span v-if="item.hot" :class="{hot:item.hot}" >hot</span>
 							</li>
 						</ul>
@@ -112,20 +112,20 @@ export default {
           list: [
             {
               name: "数据统计",
-              url: "http://starcraft.com"
+              url: "/detail/analysis"
             },
             {
               name: "数据预测",
-              url: "http://warcraft.com"
+              url: "/detail/count"
             },
             {
               name: "流量分析",
-              url: "http://overwatch.com",
+              url: "/detail/forecast",
               hot: true
             },
             {
               name: "广告发布",
-              url: "http://hearstone.com"
+              url: "/detail/publish"
             }
           ]
         },
@@ -165,7 +165,7 @@ export default {
     }
   }, //https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=
   mounted() {
-    this.$http.get("http://localhost:3000/getNewsList").then(
+    this.$http.get("http://localhost:4000/getNewsList").then(
       res => {
         console.log(res.body);
       },
@@ -173,7 +173,7 @@ export default {
         console.log(error);
       }
     )
-    this.$http.get("http://localhost:3000/db").then((res)=>{
+    this.$http.get("http://localhost:4000/db").then((res)=>{
       console.log(res.body)
        this.newsList=res.body.getNewsList
     },(err)=>{
