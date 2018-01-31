@@ -1,7 +1,7 @@
 <template>
   <div>
       <ul>
-          <li v-for="(item,index) in sendToChe" @click="toggleStatus(index)" :class="{seled:selectedArr.indexOf(sendToChe[index].label) !== -1}">{{item.label}}</li> {{selectedArr}}
+          <li v-for="(item,index) in sendToChe" @click="toggleStatus(index)" :class="{seled:selectedArr.indexOf(sendToChe[index].label) !== -1}">{{item.label}}</li> 
       </ul>
   </div>
 </template>
@@ -40,30 +40,36 @@ export default {
           1
         );
       }
+      //this.selectedArr = this.selectedArr.join(",");
+     // console.log(this.selectedArr);
+      //this.selectedArr = this.selectedArr.split(",");
       //console.log(this.selectedArr);
-      this.$emit("getCheckArr", this.indexArr);
+      this.$emit("on-change", this.indexArr);
       //console.log(this.indexArr);
     }
+  },
+  mounted(){
+    this.toggleStatus(0)
   }
 };
 </script>
 <style lang="stylus" scoped>
 div {
-    display: inline-block;
+  display: inline-block;
 
-    ul {
-        li {
-            float: left;
-            padding: 2px 5px;
-            border: 1px solid #ddd;
-            font: normal 100 14px '微软雅黑';
-            border-radius: 4px;
-            margin-left: 5px;
+  ul {
+    li {
+      float: left;
+      padding: 2px 5px;
+      border: 1px solid #ddd;
+      font: normal 100 14px '微软雅黑';
+      border-radius: 4px;
+      margin-left: 5px;
 
-            &:hover, &.seled {
-                background-color: #ef45ef;
-            }
-        }
+      &:hover, &.seled {
+        background-color: #ef45ef;
+      }
     }
+  }
 }
 </style>

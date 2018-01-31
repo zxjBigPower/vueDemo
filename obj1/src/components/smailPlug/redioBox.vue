@@ -2,7 +2,7 @@
 <div>
 <ul>
     <li v-for="(item,index) in sendToRedio" @click="getSelectedArray(index)" :class="{seled:index===currentIndex}">{{item.name}}</li>
-    {{selected}}
+    
 </ul>
 </div>
 </template>
@@ -19,9 +19,12 @@ export default {
       getSelectedArray (index){
           this.selected=this.sendToRedio[index].name
           this.nowIndex=this.sendToRedio[index].value;
-          this.$emit("getRedio",this.nowIndex)
+          this.$emit("on-change",this.nowIndex)
           this.currentIndex=index
       }
+  },
+  mounted(){
+      this.getSelectedArray(0)
   },
   props:{
       sendToRedio:{type:Array,default:{name:"未定义",value:9}}

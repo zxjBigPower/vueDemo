@@ -1,15 +1,20 @@
 <template>
   <div>
+    <is-dialog :isShow="dialogStatus" @onClose="fromDialog()">
+     <get-price :sendToDialog="allData"></get-price>
+    </is-dialog>
       <div class="details-r-t">
          <h2>数据预测</h2>
         <p>未来，大数据会变得越来越重要，其核心应用预测也会成为互联网行业以及产业变革的重要力量，我们很有必要对数据预测及其分析方法进行全面且深入的了解。在这一点上，《大数据预测》是本很好的读物，适合大数据所有相关行业的人阅读。</p>
         <ul>
-          <li><span>选择颜色：</span><redio-box :sendToRedio="redioList" @getRedio="getDataFromRedio"></redio-box></li>
+          <li><span>选择颜色：</span><redio-box :sendToRedio="redioList" @on-change="getPlugData('forecastRedio',$event)"></redio-box>{{forecastRedio}}</li>
           <li><span>产品类型：</span>
-            <selection :sendToSelect="ersionList" @getSelectionVal="getSelectionVal"></selection>
-            {{goodsType}}</li>
-          <li><span>有效时间：</span><checkBox :sendToChe="checkList" @getCheckArr="getCheckArr"></checkBox> </li>
-          <li><span>总价：</span></li>
+            <selection :sendToSelect="ersionList" @on-change="getPlugData('forecastSel',$event)"></selection>
+            {{forecastSel}}</li>
+          <li><span>有效时间：</span><checkBox :sendToChe="checkList" @on-change="getPlugData('forecastCheck',$event)"></checkBox> {{forecastCheck}}</li>
+          <li><span>数量：</span><number-box @on-change="getPlugData('forecastNum',$event)" :sendTheMax="theMaxNum" :sendTheMin="theMinNum"></number-box>{{forecastNum}}</li>
+          <li><span>总价：</span> {{getPesentPrice}}元</li>
+          <li><span @click="openDialog">购买该产品</span></li>
         </ul></div>
         <div class="details-r-b">
           <h2>产品说明</h2>
@@ -25,13 +30,25 @@
 import Selection from "../../components/smailPlug/selection"
 import redioBox from "../../components/smailPlug/redioBox"
 import checkBox from "../../components/smailPlug/checkBox"
+import numberBox from "../../components/smailPlug/numberBox"
+import isDialog from "../../components/dialog"
+import getPrice from "../../components/form/getPrice"
 export default {
   components:{
-    Selection,redioBox,checkBox
+    Selection,redioBox,checkBox,numberBox,isDialog,getPrice
   },
   data(){
     return {
+      forecastNum:null,
+      forecastRedio:null,
+      forecastCheck:null,
+      forecastSel:null,
+      theMaxNum:20,
+      theMinNum:1,
+      getPesentPrice:0,
       goodsType:"",
+      allData:null,
+      dialogStatus:false,
       ersionList: [
         {
           label: '纸质报告',
@@ -97,16 +114,39 @@ export default {
     }
   },
   methods:{
-    getSelectionVal (e){
-      console.log(e);
-      this.goodsType=e
+    getPlugData (e,a){
+      this.getPrice()
+      //console.log(e)
+      //console.log(a);
+      this[e]=a
     },
-    getDataFromRedio (e){
-      console.log(e);
+    getPrice (){
+      let prome ={
+        num:this.forecastNum,
+        redio:this.forecastRedio,
+        check:this.forecastCheck,
+        sel:this.forecastSel
+      }
+      this.$http.post("http://localhost:5000/getPrice",prome).then((res)=>{
+        //console.log(res.data.redio);
+        this.getPesentPrice=res.data.redio
+      },err => {
+        console.log(err);
+      })
     },
-    getCheckArr (e){
-      console.log(e);
-      
+    openDialog (){
+       let prome ={
+        num:this.forecastNum,
+        redio:this.forecastRedio,
+        check:this.forecastCheck,
+        sel:this.forecastSel
+      }
+      this.dialogStatus=true;
+      this.allData=prome
+    },
+    fromDialog (e){
+      //console.log(e);
+      this.dialogStatus=false;
     }
   },
   mounted(){
@@ -130,6 +170,19 @@ text-overflow: ellipsis;
 display: -webkit-box;
 -webkit-line-clamp: 2;
 -webkit-box-orient: vertical;
+}
+.details-right .details-r-t ul li:last-child span{
+  margin-left: 20px;
+  margin-top: 10px;
+  display: inline-block;
+  width: 150px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  background-color: aquamarine;
+  border-radius: 4px
 }
 .details-right .details-r-b {
   margin-top: 10px;

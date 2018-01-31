@@ -5,7 +5,7 @@
         <p>历史资料、科学实验、检验、统计等所获得的和用于科学研究、技术设计、查证、决策等的数值加以统计为解决方案做前期准备。</p>
         <div class="t">
           <ul>
-            <li><span>数量增减</span> </li>
+            <li><span>数量增减</span><number-box @sendNum="getNum"></number-box> </li>
             <li>撒旦法卫生费</li>
             <li>regswatghwsrgt</li>
             <li>rwtswsjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj</li>
@@ -209,47 +209,81 @@
   </div>
 </template>
 <script>
+import numberBox from "../../components/smailPlug/numberBox";
+import logFormVue from '../../components/form/logForm.vue';
 export default {
+  components: {
+    numberBox
+  },
   
-}
+  methods: {
+    getNum(e) {
+        console.log(e);
+        
+    }
+  }
+};
 </script>
 <style lang="stylus" scoped>
-.sales-board-t 
-  background-color #fff
-  h2
-    margin: 10px auto 20px
-    text-align center
-  p 
-    text-indent 2em
-    line-height 24px
-    font-size 14px 
-  .t
-    ul
-      li 
-        font-size 14px
-        padding-top 5px
-        margin-left 10px
-      li:nth-of-type(4)
-        padding-bottom 5px
-.sales-board-des
-  background-color #fff
-  box-sizing border-box
-  h2
-    margin: 10px auto 20px
-    text-align center
-  p 
-    text-indent 2em
-    line-height 24px
-    font-size 14px 
-  table
-    font-size 14px  
-    text-align center
-    width 100%
-    tr 
-      
-      td
-        background-color #f1f1f1
-        div
-          padding 5px
+.sales-board-t {
+    background-color: #fff;
+
+    h2 {
+        margin: 10px auto 20px;
+        text-align: center;
+    }
+
+    p {
+        text-indent: 2em;
+        line-height: 24px;
+        font-size: 14px;
+    }
+
+    .t {
+        ul {
+            li {
+                font-size: 14px;
+                padding-top: 5px;
+                margin-left: 10px;
+            }
+
+            li:nth-of-type(4) {
+                padding-bottom: 5px;
+            }
+        }
+    }
+}
+
+.sales-board-des {
+    background-color: #fff;
+    box-sizing: border-box;
+
+    h2 {
+        margin: 10px auto 20px;
+        text-align: center;
+    }
+
+    p {
+        text-indent: 2em;
+        line-height: 24px;
+        font-size: 14px;
+    }
+
+    table {
+        font-size: 14px;
+        text-align: center;
+        width: 100%;
+
+        tr {
+            td {
+                background-color: #f1f1f1;
+
+                div {
+                    padding: 5px;
+                }
+            }
+        }
+    }
+}
 </style>
 

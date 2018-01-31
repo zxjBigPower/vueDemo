@@ -165,7 +165,7 @@ export default {
     }
   }, //https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=
   mounted() {
-    this.$http.get("http://localhost:4000/getNewsList").then(
+    this.$http.get("http://localhost:5000/getNewsList").then(
       res => {
         console.log(res.body);
       },
@@ -173,7 +173,7 @@ export default {
         console.log(error);
       }
     )
-    this.$http.get("http://localhost:4000/db").then((res)=>{
+    this.$http.get("http://localhost:5000/db").then((res)=>{
       console.log(res.body)
        this.newsList=res.body.getNewsList
     },(err)=>{

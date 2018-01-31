@@ -14,7 +14,7 @@ export default {
   },
   methods:{
       getGoodsType (){
-        this.$emit("getSelectionVal",this.goodsType)
+        this.$emit("on-change",this.goodsType)
     }
   },
   props:{
@@ -26,6 +26,7 @@ export default {
   mounted(){
       this.goodsType=this.sendToSelect[0].value
       //console.log(this.sendToSelect[0].value)
+      this.getGoodsType()
   }
 }
 </script>
