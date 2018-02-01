@@ -27,130 +27,175 @@
   </div>
 </template>
 <script>
-import Selection from "../../components/smailPlug/selection"
-import redioBox from "../../components/smailPlug/redioBox"
-import checkBox from "../../components/smailPlug/checkBox"
-import numberBox from "../../components/smailPlug/numberBox"
-import isDialog from "../../components/dialog"
-import getPrice from "../../components/form/getPrice"
+import Selection from "../../components/smailPlug/selection";
+import redioBox from "../../components/smailPlug/redioBox";
+import checkBox from "../../components/smailPlug/checkBox";
+import numberBox from "../../components/smailPlug/numberBox";
+import isDialog from "../../components/dialog";
+import getPrice from "../../components/form/getPrice";
 export default {
-  components:{
-    Selection,redioBox,checkBox,numberBox,isDialog,getPrice
+  components: {
+    Selection,
+    redioBox,
+    checkBox,
+    numberBox,
+    isDialog,
+    getPrice
   },
-  data(){
+  data() {
     return {
-      forecastNum:null,
-      forecastRedio:null,
-      forecastCheck:null,
-      forecastSel:null,
-      theMaxNum:20,
-      theMinNum:1,
-      getPesentPrice:0,
-      goodsType:"",
-      allData:null,
-      dialogStatus:false,
+      forecastNum: null,
+      forecastRedio: null,
+      forecastRedioName: "",
+      forecastCheck: null,
+      forecastCheckName: "",
+      forecastSel: null,
+      forecastSelName: "",
+      theMaxNum: 20,
+      theMinNum: 1,
+      getPesentPrice: 0,
+      goodsType: "",
+      allData: null,
+      dialogStatus: false,
       ersionList: [
         {
-          label: '纸质报告',
+          label: "纸质报告",
           value: 0
         },
         {
-          label: 'pdf',
+          label: "pdf",
           value: 1
         },
         {
-          label: '页面报告',
+          label: "页面报告",
           value: 2
         },
         {
-          label: '邮件',
+          label: "邮件",
           value: 3
         }
       ],
-      redioList:[
+      redioList: [
         {
-          name:"红色",
-          value:"10"
+          name: "红色",
+          value: "10"
         },
         {
-          name:"绿色",
-          value:"11"
+          name: "绿色",
+          value: "11"
         },
         {
-          name:"橙色",
-          value:"12"
+          name: "橙色",
+          value: "12"
         },
         {
-          name:"黄色",
-          value:"13"
+          name: "黄色",
+          value: "13"
         },
         {
-          name:"蓝色",
-          value:"14"
+          name: "蓝色",
+          value: "14"
         }
       ],
       checkList: [
         {
-          label: '出版业',
+          label: "出版业",
           value: 0
         },
         {
-          label: '媒体',
+          label: "媒体",
           value: 1
         },
         {
-          label: '金融',
+          label: "金融",
           value: 2
         },
         {
-          label: '互联网',
+          label: "互联网",
           value: 3
         },
         {
-          label: '游戏',
+          label: "游戏",
           value: 4
         }
       ]
-    }
+    };
   },
-  methods:{
-    getPlugData (e,a){
-      this.getPrice()
+  methods: {
+    getPlugData(e, a) {
+      this.getPrice();
       //console.log(e)
       //console.log(a);
-      this[e]=a
+      this[e] = a;
     },
-    getPrice (){
-      let prome ={
-        num:this.forecastNum,
-        redio:this.forecastRedio,
-        check:this.forecastCheck,
-        sel:this.forecastSel
-      }
-      this.$http.post("http://localhost:5000/getPrice",prome).then((res)=>{
-        //console.log(res.data.redio);
-        this.getPesentPrice=res.data.redio
-      },err => {
-        console.log(err);
-      })
+    getPrice() {
+      let prome = {
+        num: this.forecastNum,
+        redio: this.forecastRedio,
+        check: this.forecastCheck,
+        sel: this.forecastSel
+      };
+      this.$http.post("http://localhost:5000/getPrice", prome).then(
+        res => {
+          //console.log(res.data.redio);
+          this.getPesentPrice = res.data.redio;
+        },
+        err => {
+          console.log(err);
+        }
+      );
     },
-    openDialog (){
-       let prome ={
-        num:this.forecastNum,
-        redio:this.forecastRedio,
-        check:this.forecastCheck,
-        sel:this.forecastSel
-      }
-      this.dialogStatus=true;
-      this.allData=prome
+    openDialog() {
+      //获取redio里的数据
+      this.redioList.forEach(el => {
+        //console.log(el);
+        if (this.forecastRedio == el.value) {
+         // console.log(el.name);
+          this.forecastRedioName = el.name;
+        }
+      });
+      //获取下拉框里的数据
+      this.ersionList.forEach(el => {
+        //console.log(el,);
+        if (this.forecastSel == el.value) {
+          //console.log(el.label);
+          this.forecastSelName = el.label;
+        }
+      });
+      //获取多选选择的数据
+      let forecastCheckName = "";
+      this.checkList.forEach(el => {
+        //console.log(el,);
+        this.forecastCheck.forEach(res => {
+          //console.log(el,res);
+          if (res == el.value) {
+            //console.log(el.label);
+            forecastCheckName += "," + el.label;
+            // this.forecastCheckName=el.label
+          }
+        });
+      });
+      forecastCheckName = forecastCheckName.slice(1, forecastCheckName.length);
+      //console.log(forecastCheckName);
+      this.forecastCheckName = forecastCheckName;
+      //传送数据到弹窗
+      let prome = {
+        num: this.forecastNum,
+        redio: this.forecastRedioName,
+        check: this.forecastCheckName,
+        sel: this.forecastSelName,
+        price:this.getPesentPrice
+      };
+      this.dialogStatus = true;
+      this.allData = prome;
     },
-    fromDialog (e){
+    fromDialog(e) {
       //console.log(e);
-      this.dialogStatus=false;
+      this.dialogStatus = false;
     }
   },
-  mounted(){
-    this.goodsType=this.ersionList[0].value
+  mounted() {
+    this.goodsType = this.ersionList[0].value;
   }
 };
 </script>
@@ -165,13 +210,13 @@ export default {
 }
 
 .details-right .details-r-t p {
-   overflow : hidden;
-text-overflow: ellipsis;
-display: -webkit-box;
--webkit-line-clamp: 2;
--webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
-.details-right .details-r-t ul li:last-child span{
+.details-right .details-r-t ul li:last-child span {
   margin-left: 20px;
   margin-top: 10px;
   display: inline-block;
@@ -182,7 +227,7 @@ display: -webkit-box;
   color: #fff;
   cursor: pointer;
   background-color: aquamarine;
-  border-radius: 4px
+  border-radius: 4px;
 }
 .details-right .details-r-b {
   margin-top: 10px;
@@ -190,14 +235,13 @@ display: -webkit-box;
   padding: 10px;
   background-color: #fff;
 }
-.details-right .details-r-b h2{
-   margin: 10px 10px 20px;
-   text-align: center;
+.details-right .details-r-b h2 {
+  margin: 10px 10px 20px;
+  text-align: center;
 }
-.details-right .details-r-b p{
+.details-right .details-r-b p {
   line-height: 24px;
   font-size: 14px;
   text-indent: 2em;
 }
-
 </style>
