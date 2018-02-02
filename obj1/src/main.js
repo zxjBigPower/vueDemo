@@ -6,12 +6,14 @@ import LayOut from './layOut'
 //import router from './router'
 import VueRouter from "vue-router"
 import IndexPage from "./pages/index"
+import OrderList from "./pages/orderList"
 import vueResource from "vue-resource"
 import PageDetails from "./pages/details"
 import detailCount from "./pages/detail/count"
 import detailAnalysis from "./pages/detail/analysis"
 import detailForecast from "./pages/detail/forecast"
 import detailPublish from "./pages/detail/publish"
+
 Vue.use(VueRouter)
 Vue.use(vueResource)
 var router=new VueRouter({
@@ -26,6 +28,10 @@ var router=new VueRouter({
     component:IndexPage
   },
   {
+    path:"/orderlist",
+    component:OrderList
+  },
+  {
     path:'/detail',
     component:PageDetails,
     redirect:"/detail/count",
@@ -33,9 +39,10 @@ var router=new VueRouter({
       {path:"count",component:detailCount},
       {path:"analysis",component:detailAnalysis},
       {path:"forecast",component:detailForecast},
-      {path:"publish",component:detailPublish}
+      {path:"publish",component:detailPublish}      
     ]
-  }
+  },
+ 
 	]
 })
 //Vue.config.productionTip = false

@@ -22,14 +22,36 @@
           <span @click="payMoney">确定付款</span>
         </div>
       </div>
-      
+      <is-dialog :isShow="isShow" @onClose="closeDialog">
+       <div class="payStatus">
+          <p>请确认支付状态：</p>
+        <div>
+          <span @click="getStatus('statusShowSuss')">支付成功</span><span @click="getStatus('statusShowFail')">支付失败</span>
+        </div>
+       </div>
+      </is-dialog>  
+      <is-dialog :isShow="statusShowSuss" @onClose="closeStatusDialog('statusShowSuss')">
+        <p>支付成功</p>
+      </is-dialog>
+      <is-dialog :isShow="statusShowFail" @onClose="closeStatusDialog('statusShowFail')">
+        <p>支付失败</p>
+      </is-dialog>
   </div>
 </template>
 <script>
-import bankComponents from "./bankComponents"
+import bankComponents from "./bankComponents";
+import isDialog from "../dialog";
 export default {
-  components:{
-    bankComponents
+  data() {
+    return {
+      isShow: false,
+      statusShowSuss:false,
+      statusShowFail:false
+    };
+  },
+  components: {
+    bankComponents,
+    isDialog
   },
   props: {
     sendToDialog: {
@@ -39,62 +61,106 @@ export default {
         redio: null,
         check: null,
         sel: null,
-        price:null
+        price: null
       }
     }
   },
-  methods:{
-    getBanks (res){
+  methods: {
+    getBanks(res) {
       console.log(res);
     },
-    payMoney (){
+    payMoney() {
       console.log(111);
-      
+      this.isShow = true;
+    },
+    //支付状态弹窗的关闭
+    closeDialog() {
+      this.isShow = false;
+    },
+    //支付成功/支付失败提示的关闭
+    closeStatusDialog (index){
+      //console.log(index);    
+      this[index]=false
+    },
+    //弹出支付成功/支付失败的提示弹窗
+    getStatus(index){
+      this[index]=true
     }
   }
 };
 </script>
 <style lang="stylus" scoped>
-div
-  p
-    margin-bottom 15px
-  ol
-    text-decoration none
-    border-top 1px solid #ddd
-    border-right 1px solid #ddd
-    border-bottom 1px solid #ddd
-    li
-      float left
-      width 25%
-      text-align center
-      overflow hidden
-      border-left 1px solid #ddd
-      box-sizing border-box
-      line-height 24px
-  ul
-    text-decoration none
-    border-right 1px solid #ddd
-    border-bottom 1px solid #ddd
-    li
-      float left
-      width 25%
-      text-align center
-      overflow hidden
-      border-left 1px solid #ddd
-      box-sizing border-box
-      line-height 24px
-      white-space nowrap
-      text-overflow  ellipsis
-  .payType
-    div
-      span 
-        display inline-block
-        width 150px
-        height 30px
-        background-color #fc7
-        text-align center
-        color #ffffff
-        cursor pointer
-        border-radius 4px
-        line-height 30px
+div {
+  p {
+    margin-bottom: 15px;
+  }
+
+  ol {
+    text-decoration: none;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+
+    li {
+      float: left;
+      width: 25%;
+      text-align: center;
+      overflow: hidden;
+      border-left: 1px solid #ddd;
+      box-sizing: border-box;
+      line-height: 24px;
+    }
+  }
+
+  ul {
+    text-decoration: none;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+
+    li {
+      float: left;
+      width: 25%;
+      text-align: center;
+      overflow: hidden;
+      border-left: 1px solid #ddd;
+      box-sizing: border-box;
+      line-height: 24px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .payType {
+    div {
+      span {
+        display: inline-block;
+        width: 150px;
+        height: 30px;
+        background-color: #fc7;
+        text-align: center;
+        color: #ffffff;
+        cursor: pointer;
+        border-radius: 4px;
+        line-height: 30px;
+      }
+    }
+  }
+}
+
+.payStatus {
+  p, div {
+    span {
+      width: 150px;
+      height: 30px;
+      line-height: 30px;
+      background-color: #d4f;
+      display: inline-block;
+      text-align: center;
+      cursor: pointer;
+      color: #fff;
+      border-radius: 2px 4px;
+      margin-left: 10px;
+    }
+  }
+}
 </style>
